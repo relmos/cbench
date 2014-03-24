@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  site: MyString
+  cdn: MyString
+  file: MyString
+  mesurement: 1.5
+  status: 1
+  date: 2014-03-23 16:04:25
+
+two:
+  site: MyString
+  cdn: MyString
+  file: MyString
+  mesurement: 1.5
+  status: 1
+  date: 2014-03-23 16:04:25

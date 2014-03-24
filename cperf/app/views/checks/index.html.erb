@@ -1,0 +1,13 @@
+<h1>CDN perf tests</h1>
+<table>
+
+  <% @checks.each do |check| %>
+    <tr>
+      <td><%= check.site %></td>
+      <td><%= check.cdn %></td>
+      <td><%= check.file %></td>
+       <td><%= check.mesurement %></td>
+      <td><%= check.status %></td>
+    </tr>
+  <% end %>
+</table>

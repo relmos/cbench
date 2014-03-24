@@ -1,0 +1,42 @@
+<%= form_for :check, url: checks_path do |f| %>
+<% if @check.errors.any? %>
+	<div id="error_explanation">
+		<h2>
+			<%= pluralize(@check.errors.count, "error") %> prohibited
+			this post from being saved
+		</h2>
+		<ul>
+			<% @check.errors.full_messages.each do |msg| %>					
+			  <li><%= msg %></li>
+			<% end %>
+		</ul>
+  	</div>		
+  	<% end %>
+
+  <p>
+  	<%= f.label :site %><br />
+  	<%= f.text_field :site%>
+  </p>
+  <p>
+  	<%= f.label :cdn %><br />
+  	<%= f.text_field :cdn %><br />
+  </p>
+  <p>
+  	<%= f.label :file %><br />
+  	<%= f.text_field :file %><br />
+  </p>
+  <p>
+  	<%= f.label :mesurement %><br />
+  	<%= f.number_field :mesurement %><br />
+  </p>
+  <p>
+  	<%= f.label :status %><br />
+  	<%= f.number_field :status %><br />
+  </p>
+  <p>
+  	<%= f.submit %>
+  </p>
+<% end %>
+<%= link_to 'Back', checks_path %>
+
+
