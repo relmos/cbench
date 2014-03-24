@@ -1,13 +1,17 @@
+<center>
 <h1>CDN perf tests</h1>
-<table>
 
-  <% @checks.each do |check| %>
-    <tr>
-      <td><%= check.site %></td>
-      <td><%= check.cdn %></td>
-      <td><%= check.file %></td>
-       <td><%= check.mesurement %></td>
-      <td><%= check.status %></td>
-    </tr>
-  <% end %>
+
+<table>
+	  <% @sites.each do |s| %>
+	  <tr><td>Edgecat <%= s %>:<%=  @edgecast[s].average("mesurement") %>ms</td></tr> 
+	  <tr><td>Akamai <%= s %>:<%= @akamai[s].average("mesurement") %>ms</td></tr>
+	  <tr><td>Fastly <%= s %>:<%= @internap[s].average("mesurement") %>ms</td></tr>
+	  <tr><td>Internap <%= s %>:<%= @fastly[s].average("mesurement") %>ms</td></tr>
+	  <% end %>
+	  <tr><td><h4>Edgecat Total Average: <%= @edgecast_total.average("mesurement") %>ms</h4></td></tr>
+	  <tr><td><h4>Akamai Total Average: <%= @akamai_total.average("mesurement") %>ms</h4></td></tr>
+	  <tr><td><h4>Fastly Total Average: <%= @fastly_total.average("mesurement") %>ms</h4></td></tr>
+	  <tr><td><h4>Internap Total Average: <%= @internap_total.average("mesurement") %>ms</h4></td></tr>
 </table>
+</center>
