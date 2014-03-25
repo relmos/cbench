@@ -4,14 +4,14 @@
 
 <table>
 	  <% @sites.each do |s| %>
-	  <tr><td>Edgecat <%= s %>:<%=  @edgecast[s].average("mesurement") %>ms</td></tr> 
-	  <tr><td>Akamai <%= s %>:<%= @akamai[s].average("mesurement") %>ms</td></tr>
-	  <tr><td>Fastly <%= s %>:<%= @internap[s].average("mesurement") %>ms</td></tr>
-	  <tr><td>Internap <%= s %>:<%= @fastly[s].average("mesurement") %>ms</td></tr>
+	  <tr><td>Edgecat <%= s %>:<%=  @edgecast[s].average("mesurement").round(2) %>ms</td></tr> 
+	  <tr><td>Akamai <%= s %>:<%= @akamai[s].average("mesurement").round(2) %>ms</td></tr>
+	  <tr><td>Fastly <%= s %>:<%= @internap[s].average("mesurement").round(2) %>ms</td></tr>
+	  <tr><td>Internap <%= s %>:<%= @fastly[s].average("mesurement").round(2) %>ms</td></tr>
 	  <% end %>
-	  <tr><td><h4>Edgecat Total Average: <%= @edgecast_total.average("mesurement") %>ms</h4></td></tr>
-	  <tr><td><h4>Akamai Total Average: <%= @akamai_total.average("mesurement") %>ms</h4></td></tr>
-	  <tr><td><h4>Fastly Total Average: <%= @fastly_total.average("mesurement") %>ms</h4></td></tr>
-	  <tr><td><h4>Internap Total Average: <%= @internap_total.average("mesurement") %>ms</h4></td></tr>
+	  <tr><td><h4>Edgecat Total Average: <%= @edgecast_total.average("mesurement").round(2) %>ms</h4></td></tr>
+	  <tr><td><h4>Akamai Total Average: <%= @akamai_total.average("mesurement").round(2) %>ms</h4></td></tr>
+	  <tr><td><h4>Fastly Total Average: <%= @fastly_total.average("mesurement").round(2) %>ms</h4></td></tr>
+	  <tr><td><h4>Internap Total Average: <%= @internap_total.average("mesurement").round(2) %>ms</h4></td></tr>
 </table>
 </center>
