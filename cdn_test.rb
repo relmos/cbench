@@ -1,4 +1,5 @@
 #!/usr/bin/ruby
+require 'rubygems'
 require 'uri'
 require 'net/http'
 require 'json'
@@ -20,9 +21,8 @@ class TestCdn
                 @response = @http.request(@request)
         end
 	def PostResult(postdata)
-		 @uri = URI.parse("http://localhost:3000/checks")
+		 @uri = URI.parse("http://torigin.outbrain.cc:3000/checks")
 		 @request = Net::HTTP::Post.new(@uri.path)
-		 puts postdata
  	         @request.body = JSON.generate(postdata)
                  @request["Content-Type"] = "application/json"
                  @http = Net::HTTP.new(@uri.host, @uri.port)
