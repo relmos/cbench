@@ -25,6 +25,12 @@
 	  
 	  <tr><td><%= pie_chart @checks.group(:cdn).sum(:mesurement) %></td></tr>
 	  </table>
+	   <% @providers.each do |p| %>
+      	<% @provider = @checks.where(site: p) %>
+        <table>
+        	<tr><td><%= area_chart @provider.group(:created_at).average(:mesurement) %></td></tr>
+        </table>
+      <% end %>
 	  <table>
 	  <tr><td><h4>Total by site</h4></td></tr>
 	  <tr><td><%= pie_chart @checks.group(:site).sum(:mesurement) %></td></tr>
@@ -38,5 +44,5 @@
 	  <tr><td><%= bar_chart @checks.group(:file).average(:mesurement), height: "500px" %></td></tr>
 	  
      </table>
-      <%= area_chart Check.group(:created_at).maximum(:mesurement) %>
+     
 </center>
