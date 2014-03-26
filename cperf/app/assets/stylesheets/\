@@ -6,6 +6,7 @@ table {
         height:80px;
         text-align:center;
         border:1px solid blue;
+	background-color:#26c0f3;
 }
 tr {
         width:100px;

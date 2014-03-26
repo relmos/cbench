@@ -1,17 +1,26 @@
 <center>
-<h1>CDN perf tests:</h1>
-
-
-<table>
+<h2>CDN perf tests</h2>
 	  <% @sites.each do |s| %>
-	  <tr><td>Edgecat <%= s %>:<%=  @edgecast[s].average("mesurement").round(2) %>ms</td></tr> 
-	  <tr><td>Akamai <%= s %>:<%= @akamai[s].average("mesurement").round(2) %>ms</td></tr>
-	  <tr><td>Fastly <%= s %>:<%= @internap[s].average("mesurement").round(2) %>ms</td></tr>
-	  <tr><td>Internap <%= s %>:<%= @fastly[s].average("mesurement").round(2) %>ms</td></tr>
+	  <table>
+	  <tr><td><b><%= s %></b></td></tr>
+	  <tr><td>Edgecat <%= s %>:<% if @edgecast[s].average("mesurement") %><%= @edgecast[s].average("mesurement").round(2) %>ms<% end %></td></tr> 
+	  <tr><td>Akamai <%= s %>:<% if @akamai[s].average("mesurement") %><%= @akamai[s].average("mesurement").round(2) %>ms<% end %></td></tr>
+	  <tr><td>Fastly <%= s %>:<% if @internap[s].average("mesurement") %><%= @internap[s].average("mesurement").round(2) %>ms<% end %></td></tr>
+	  <tr><td>Internap <%= s %>:<% if @fastly[s].average("mesurement") %><%= @fastly[s].average("mesurement").round(2) %>ms<% end %></td></tr>
+	  <tr><td>Origin <%= s %>:<% if @origin[s].average("mesurement") %><%= @origin[s].average("mesurement").round(2) %>ms<% end %></td></tr>
+	  </table>
 	  <% end %>
-	  <tr><td><h4>Edgecat Total Average: <%= @edgecast_total.average("mesurement").round(2) %>ms</h4></td></tr>
-	  <tr><td><h4>Akamai Total Average: <%= @akamai_total.average("mesurement").round(2) %>ms</h4></td></tr>
-	  <tr><td><h4>Fastly Total Average: <%= @fastly_total.average("mesurement").round(2) %>ms</h4></td></tr>
-	  <tr><td><h4>Internap Total Average: <%= @internap_total.average("mesurement").round(2) %>ms</h4></td></tr>
-</table>
+	  <table>
+	  <tr><td><b>Edgecast Total Average: <% if @edgecast_total.average("mesurement") %><%= @edgecast_total.average("mesurement").round(2) %>ms<% end %></b></td></tr>
+	  <tr><td><b>Akamai Total Average:  <% if @akamai_total.average("mesurement") %><%= @akamai_total.average("mesurement").round(2) %>ms<% end %></b></td></tr>
+	  <tr><td><b>Fastly Total Average:  <% if @fastly_total.average("mesurement") %><%= @fastly_total.average("mesurement").round(2) %>ms<% end %></b></td></tr>
+	  <tr><td><b>Internap Total Average: <% if @internap_total.average("mesurement") %><%= @internap_total.average("mesurement").round(2) %>ms<% end %></b></td></tr>
+	  <tr><td><b>Origin Total Average: <% if @origin_total.average("mesurement") %><%= @origin_total.average("mesurement").round(2) %>ms<% end %></b></td></tr>
+	  </table>
+	  <table>
+	  <tr><td><%= pie_chart @checks.group(:cdn).sum(:mesurement) %></td></tr>
+	  <tr><td><%= pie_chart @checks.group(:site).sum(:mesurement) %></td></tr>
+	  <tr><td><%= pie_chart @checks.group(:status).count %></td></tr>
+	  <tr><td><%= bar_chart @checks.group(:file).average(:mesurement), height: "500px" %></td></tr>
+          </table>
 </center>
