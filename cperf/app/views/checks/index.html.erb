@@ -38,5 +38,6 @@
 	  <tr><td><%= bar_chart @checks.group(:file).average(:mesurement), height: "500px" %></td></tr>
 	  
      </table>
-      <%= area_chart Check.group(:created_at).maximum(:mesurement) %>
+      
+      <%# area_chart Check.group(:created_at).average(:mesurement) %>
 </center>
