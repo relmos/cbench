@@ -26,7 +26,7 @@
 	  <tr><td><%= pie_chart @checks.group(:cdn).sum(:mesurement) %></td></tr>
 	  </table>
 	   <% @providers.each do |p| %>
-      	<% @provider = @checks.where(site: p) %>
+      	<% @provider = @checks.where(cdn: p) %>
         <table>
         	<tr><td><%= area_chart @provider.group(:created_at).average(:mesurement) %></td></tr>
         </table>
