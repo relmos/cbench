@@ -3,6 +3,7 @@ skip_before_filter :verify_authenticity_token
 respond_to :json, :html
 def index
   @sites = ["Israel", "nydc1", "ladc1", "chidc2", "Europe", "Tokyo"]
+  @providers = [ "fastly", "akamai", "edgecast", "internap", "origin"]
   @fastly = Hash.new {|h,k| h[k] = []}
   @edgecast = Hash.new {|h,k| h[k] = []}
   @internap = Hash.new {|h,k| h[k] = []}
