@@ -8,19 +8,35 @@
 	  <tr><td>Fastly <%= s %>:<% if @internap[s].average("mesurement") %><%= @internap[s].average("mesurement").round(2) %>ms<% end %></td></tr>
 	  <tr><td>Internap <%= s %>:<% if @fastly[s].average("mesurement") %><%= @fastly[s].average("mesurement").round(2) %>ms<% end %></td></tr>
 	  <tr><td>Origin <%= s %>:<% if @origin[s].average("mesurement") %><%= @origin[s].average("mesurement").round(2) %>ms<% end %></td></tr>
-	  </table>
+	  <% @site = @checks.where(site: s) %>
+	  <tr><td><%= pie_chart @site.group(:cdn).sum(:mesurement) %></td></tr>
+	  
+	  
 	  <% end %>
+	  </table>
 	  <table>
+	  <tr><td><h2>Total results</h2></td></tr>
+	  <tr><td><h4>Total by CDN</h4></td></tr>
 	  <tr><td><b>Edgecast Total Average: <% if @edgecast_total.average("mesurement") %><%= @edgecast_total.average("mesurement").round(2) %>ms<% end %></b></td></tr>
 	  <tr><td><b>Akamai Total Average:  <% if @akamai_total.average("mesurement") %><%= @akamai_total.average("mesurement").round(2) %>ms<% end %></b></td></tr>
 	  <tr><td><b>Fastly Total Average:  <% if @fastly_total.average("mesurement") %><%= @fastly_total.average("mesurement").round(2) %>ms<% end %></b></td></tr>
 	  <tr><td><b>Internap Total Average: <% if @internap_total.average("mesurement") %><%= @internap_total.average("mesurement").round(2) %>ms<% end %></b></td></tr>
 	  <tr><td><b>Origin Total Average: <% if @origin_total.average("mesurement") %><%= @origin_total.average("mesurement").round(2) %>ms<% end %></b></td></tr>
+	  
+	  <tr><td><%= pie_chart @checks.group(:cdn).sum(:mesurement) %></td></tr>
 	  </table>
 	  <table>
-	  <tr><td><%= pie_chart @checks.group(:cdn).sum(:mesurement) %></td></tr>
+	  <tr><td><h4>Total by site</h4></td></tr>
 	  <tr><td><%= pie_chart @checks.group(:site).sum(:mesurement) %></td></tr>
+	  </table>
+	  <table>
+	  <tr><td><h4>Status code</h4></td></tr>
 	  <tr><td><%= pie_chart @checks.group(:status).count %></td></tr>
+	  </table>
+	  <table>
+	  <tr><td><h4>Files latency</h4></td></tr>
 	  <tr><td><%= bar_chart @checks.group(:file).average(:mesurement), height: "500px" %></td></tr>
-          </table>
+	  
+     </table>
+      <%= area_chart Check.group(:created_at).maximum(:mesurement) %>
 </center>

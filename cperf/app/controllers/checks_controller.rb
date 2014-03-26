@@ -21,8 +21,11 @@ def index
   @internap_total = Check.where(cdn: 'internap')
   @akamai_total = Check.where(cdn: 'akamai')
   @origin_total = Check.where(cdn: 'origin')
-  @fastly_average = @fastly_total.average("mesurement")
-  @average = @checks.average("mesurement") 
+  
+  
+  
+  
+ 
 end
 def new
   @check = Check.new
