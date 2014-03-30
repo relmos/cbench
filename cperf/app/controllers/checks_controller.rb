@@ -41,7 +41,7 @@ def create
    end
 end
 def show
-  @check = Check.find(params[:id])
+  @check = Check.all
 end
 
 

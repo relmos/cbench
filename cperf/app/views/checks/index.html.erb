@@ -3,17 +3,16 @@
 	  <% @sites.each do |s| %>
 	  <table>
 	  <tr><td><b><%= s %></b></td></tr>
-	  <tr><td>Edgecat <%= s %>:<% if @edgecast[s].average("mesurement") %><%= @edgecast[s].average("mesurement").round(2) %>ms<% end %></td></tr> 
+	  <tr><td>Edgecat <%= s %>:<% if @edgecast[s].average("mesurement") %><%= @edgecast[s].average("mesurement").round(2) %>ms<% end %></td><td><%= link_to 'show', show_path %></td></tr> 
 	  <tr><td>Akamai <%= s %>:<% if @akamai[s].average("mesurement") %><%= @akamai[s].average("mesurement").round(2) %>ms<% end %></td></tr>
 	  <tr><td>Internap <%= s %>:<% if @internap[s].average("mesurement") %><%= @internap[s].average("mesurement").round(2) %>ms<% end %></td></tr>
 	  <tr><td>Fastly <%= s %>:<% if @fastly[s].average("mesurement") %><%= @fastly[s].average("mesurement").round(2) %>ms<% end %></td></tr>
 	  <tr><td>Origin <%= s %>:<% if @origin[s].average("mesurement") %><%= @origin[s].average("mesurement").round(2) %>ms<% end %></td></tr>
 	  <% @site = @checks.where(site: s) %>
-	  <tr><td><%= pie_chart @site.group(:cdn).sum(:mesurement) %></td></tr>
-	  
-	  
+	  	<tr><td><%= pie_chart @site.group(:cdn).sum(:mesurement) %></td></tr>
 	  <% end %>
 	  </table>
+	  
 	  <table>
 	  <tr><td><h2>Total results</h2></td></tr>
 	  <tr><td><h4>Total by CDN</h4></td></tr>
