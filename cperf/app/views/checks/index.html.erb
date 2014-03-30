@@ -16,11 +16,11 @@
 	  <table>
 	  <tr><td><h2>Total results</h2></td></tr>
 	  <tr><td><h4>Total by CDN</h4></td></tr>
-	  <tr><td><b>Edgecast Total Average: <% if @edgecast_total.average("mesurement") %><%= @edgecast_total.average("mesurement").round(2) %>ms<% end %></b></td></tr>
-	  <tr><td><b>Akamai Total Average:  <% if @akamai_total.average("mesurement") %><%= @akamai_total.average("mesurement").round(2) %>ms<% end %></b></td></tr>
-	  <tr><td><b>Fastly Total Average:  <% if @fastly_total.average("mesurement") %><%= @fastly_total.average("mesurement").round(2) %>ms<% end %></b></td></tr>
-	  <tr><td><b>Internap Total Average: <% if @internap_total.average("mesurement") %><%= @internap_total.average("mesurement").round(2) %>ms<% end %></b></td></tr>
-	  <tr><td><b>Origin Total Average: <% if @origin_total.average("mesurement") %><%= @origin_total.average("mesurement").round(2) %>ms<% end %></b></td></tr>
+	  <% @providers.each do |p| %>
+	   <% @pchecks = @checks.where(cdn: p) %> 
+	  	<tr><td><b> Total Average <%= p %>: <% if @pchecks.average("mesurement") %><%= @pchecks.average("mesurement").round(2) %>ms<% end %></b></td></tr>
+	  <% end %>
+	  
 	  
 	  <tr><td><%= pie_chart @checks.group(:cdn).sum(:mesurement) %></td></tr>
 	  </table>
