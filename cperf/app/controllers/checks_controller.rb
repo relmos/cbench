@@ -22,11 +22,8 @@ def index
   @internap_total = Check.where(cdn: 'internap')
   @akamai_total = Check.where(cdn: 'akamai')
   @origin_total = Check.where(cdn: 'origin')
-  
-  
-  
-  
  
+
 end
 def new
   @check = Check.new
@@ -41,7 +38,10 @@ def create
    end
 end
 def show
-  @check = Check.all
+   @site = params[:site]
+   @provider = params[:provider]
+   @schecks = Check.where(site: @site, cdn: @provider)
+   @chart = @schecks.group(:created_at).average(:mesurement)    
 end
 
 

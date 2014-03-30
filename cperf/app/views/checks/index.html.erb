@@ -3,14 +3,14 @@
 	  <% @sites.each do |s| %>
 	  <table>
 	  <tr><td><b><%= s %></b></td></tr>
-	  <tr><td>Edgecat <%= s %>:<% if @edgecast[s].average("mesurement") %><%= @edgecast[s].average("mesurement").round(2) %>ms<% end %></td><td><%= link_to 'show', show_path %></td></tr> 
-	  <tr><td>Akamai <%= s %>:<% if @akamai[s].average("mesurement") %><%= @akamai[s].average("mesurement").round(2) %>ms<% end %></td></tr>
-	  <tr><td>Internap <%= s %>:<% if @internap[s].average("mesurement") %><%= @internap[s].average("mesurement").round(2) %>ms<% end %></td></tr>
-	  <tr><td>Fastly <%= s %>:<% if @fastly[s].average("mesurement") %><%= @fastly[s].average("mesurement").round(2) %>ms<% end %></td></tr>
-	  <tr><td>Origin <%= s %>:<% if @origin[s].average("mesurement") %><%= @origin[s].average("mesurement").round(2) %>ms<% end %></td></tr>
+	  <% @providers.each do |p| %>
+	 	 <% @results = Check.where(cdn: p, site:s) %>
+	     <tr><td><%= p %> <%= s %>:<% if @results.average("mesurement") %><%= @results.average("mesurement").round(2) %>ms<% end %></td><td><%= link_to 'More', :controller => 'show', :site => s, :provider => p %></td></tr>
+	  <% end %>
 	  <% @site = @checks.where(site: s) %>
 	  	<tr><td><%= pie_chart @site.group(:cdn).sum(:mesurement) %></td></tr>
 	  <% end %>
+	  
 	  </table>
 	  
 	  <table>
@@ -38,10 +38,6 @@
 	  <tr><td><%= bar_chart @checks.group(:file).average(:mesurement), height: "500px" %></td></tr>
 	  
      </table>
-<<<<<<< HEAD
       
-      <%# area_chart Check.group(:created_at).average(:mesurement) %>
-=======
-     
->>>>>>> ff0daac3c80f5817c87425c341dc26daf6b69162
+      <#% area_chart Check.group(:created_at).average(:mesurement) %>
 </center>
