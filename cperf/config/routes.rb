@@ -10,6 +10,9 @@ Cperf::Application.routes.draw do
    resources :checks do
     root to: 'checks#index'
   end
+  resources :odbs do
+    root to: 'odbs#index'
+  end
   resources :show do
     root to: 'checks#show'
   end

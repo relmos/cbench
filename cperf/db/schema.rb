@@ -11,9 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140323160425) do
+ActiveRecord::Schema.define(version: 20140331211706) do
 
   create_table "checks", force: true do |t|
+    t.string   "site"
+    t.string   "cdn"
+    t.string   "file"
+    t.float    "mesurement"
+    t.integer  "status"
+    t.datetime "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "odbs", force: true do |t|
     t.string   "site"
     t.string   "cdn"
     t.string   "file"

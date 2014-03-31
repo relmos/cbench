@@ -6,7 +6,7 @@ require 'json'
 class TestCdn
         def SetParameters(location)
                 @cdn = Hash.new {|h,k| h[k] = []}
-                @cdn['cdnlist'] = [ 'akamai', 'fastly', 'edgecast', 'internap', 'origin'  ]
+                @cdn['cdnlist'] = [ 'origin'  ]
                 @cdn['odb1'] = [ '/get?key=AYQHSUWJ8576&logStat=false&format=xml&url=http%3A//www.webx0.com/2008/06/an-alternative.html&sort=popularity&order=desc&num=4&urlType=redirect&level=debug&srcDocFetchMode=mp&recType=ALL&numVisibleRecs=1&maxNumAds=1&location=US&servePc=true&blogPost=false&wlFilter=true&readFromMemCache=true&writeToMemCache=true&recReqType=doc_recs&widgetJSId=AR_1&excludeSameSource=false&allowReplicatingRecs=false&runOflAlgs=false&readerPlatform=WEB&recsContentType=ALL&maxNumOrganicRecs=4&userDevice=desktop&recMode=rec&raterMode=none']
                 @cdn['odb2'] = [ '/get?key=AYQHSUWJ8576&logStat=false&format=xml&url=http%3A//dudihol.blogspot.co.il/2012/02/blog-post.html&sort=popularity&order=desc&num=10&urlType=redirect&level=debug&srcDocFetchMode=mp&recType=ALL&numVisibleRecs=10&maxNumAds=6&servePc=true&blogPost=false&wlFilter=true&readFromMemCache=true&writeToMemCache=true&recReqType=doc_recs&widgetJSId=AR_1&excludeSameSource=false&allowReplicatingRecs=false&runOflAlgs=false&readerPlatform=WEB&recsContentType=ALL&maxNumOrganicRecs=4&userDevice=desktop&recMode=rec&raterMode=none']
                 @cdn['odb3'] = [ '/get?key=AYQHSUWJ8576&logStat=false&format=xml&url=http%3A//oragolan.com/adhd.aspx&sort=popularity&order=desc&num=10&urlType=redirect&level=debug&srcDocFetchMode=all&recType=ALL&numVisibleRecs=10&maxNumAds=6&servePc=true&blogPost=false&wlFilter=true&readFromMemCache=true&writeToMemCache=true&recReqType=doc_recs&widgetJSId=NA&excludeSameSource=false&allowReplicatingRecs=false&runOflAlgs=false&readerPlatform=WEB&recsContentType=ALL&maxNumOrganicRecs=4&userDevice=desktop&recMode=rec&raterMode=none']
@@ -22,11 +22,12 @@ class TestCdn
                 @response = @http.request(@request)
         end
   	    def PostResult(postdata)
-		             @uri = URI.parse("http://localhost:3000/odb")
- 	               @request.body = JSON.generate(postdata)
+		 @uri = URI.parse("http://localhost:3000/odbs")
+		 @request = Net::HTTP::Post.new(@uri.path)
+ 	         @request.body = JSON.generate(postdata)
                  @request["Content-Type"] = "application/json"
                  @http = Net::HTTP.new(@uri.host, @uri.port)
-                 @response = @http.start {|h| h.request(@request)}		
+                 @response = @http.start {|h| h.request(@request)}
 	end
         def MeasureGet()
                 @cdn['cdnlist'].each do |cdn|
@@ -38,25 +39,24 @@ class TestCdn
         end
         def GetUrl(urls,dir,cdn)
                 urls.each do |f|
-			             @begin_time = Time.now
-                   @response = GetCdn("http://odb-#{cdn}.outbrain.cc/#{dir}/#{f}")
+		         @begin_time = Time.now
+                         @response = GetCdn("http://odb-#{cdn}.outbrain.cc/#{dir}/#{f}")
 	              	 @code = @response.code
 	                 @end_time = Time.now
 	                 @mesurement = ((@end_time - @begin_time)*1000)
-			             @post_params = BuildRequest(cdn,f)
-			           end
-			           puts @post_params
-			           #PostResult(@post_params)
+		         @post_params = BuildRequest(cdn,f)
+	                 PostResult(@post_params)
+	        end
         end
         def BuildRequest(cdn,file)
 	       	@post_params = {
 	        :site => "#{@location}",
        		:cdn => "#{cdn}",
        		:file => "#{file}",
-  	      :mesurement => "#{@mesurement}",
+  	        :mesurement => "#{@mesurement}",
     	  	:status => "#{@code}"
  	        }
-		      return(@post_params)	
+		return(@post_params)	
         end
 end
 pfrtest = TestCdn.new()

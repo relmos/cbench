@@ -1,0 +1,41 @@
+<center>
+<h2>CDN perf tests</h2>
+	  <% @sites.each do |s| %>
+	  <table>
+	  <tr><td><b><%= s %></b></td></tr>
+	  <% @providers.each do |p| %>
+	 	 <% @results = Odb.where(cdn: p, site:s) %>
+	     <tr><td><%= p %> <%= s %>:<% if @results.average("mesurement") %><%= @results.average("mesurement").round(2) %>ms<% end %></td><td><%= link_to 'More', :controller => 'show', :site => s, :provider => p %></td></tr>
+	  <% end %>
+	  <% @site = @odbs.where(site: s) %>
+	  	<tr><td><%= pie_chart @site.group(:cdn).sum(:mesurement) %></td></tr>
+	  <% end %>
+	  
+	  </table>
+	  
+	  <table>
+	  <tr><td><h2>Total results</h2></td></tr>
+	  <tr><td><h4>Total by CDN</h4></td></tr>
+	  <% @providers.each do |p| %>
+	   <% @podbs = @odbs.where(cdn: p) %> 
+	  	<tr><td><b> Total Average <%= p %>: <% if @podbs.average("mesurement") %><%= @podbs.average("mesurement").round(2) %>ms<% end %></b></td></tr>
+	  <% end %>
+	  
+	  
+	  <tr><td><%= pie_chart @odbs.group(:cdn).sum(:mesurement) %></td></tr>
+	  </table>
+
+	  <table>
+	  <tr><td><h4>Total by site</h4></td></tr>
+	  <tr><td><%= pie_chart @odbs.group(:site).sum(:mesurement) %></td></tr>
+	  </table>
+	  <table>
+	  <tr><td><h4>Status code</h4></td></tr>
+	  <tr><td><%= pie_chart @odbs.group(:status).count %></td></tr>
+	  </table>
+	  <table>
+	  <tr><td><h4>Files latency</h4></td></tr>
+	  <tr><td><%= bar_chart @odbs.group(:file).average(:mesurement), height: "500px" %></td></tr>
+	  
+     </table>
+</center>
