@@ -3,12 +3,11 @@ class OdbsController < ApplicationController
 respond_to :json, :html
 def index
   @sites = ["Israel", "nydc1", "ladc1", "chidc2", "Europe", "Tokyo"]
-  @providers = [ "fastly", "akamai", "edgecast", "internap", "origin"]
+  @providers = [ "fastly", "edgecast", "internap", "origin"]
   @odbs = Odb.all
   @fastly_total = Odb.where(cdn: 'fastly')
   @edgecast_total = Odb.where(cdn: 'edgecast')
   @internap_total = Odb.where(cdn: 'internap')
-  @akamai_total = Odb.where(cdn: 'akamai')
   @origin_total = Odb.where(cdn: 'origin')
  
 

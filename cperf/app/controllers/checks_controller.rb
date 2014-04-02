@@ -3,12 +3,13 @@ skip_before_filter :verify_authenticity_token
 respond_to :json, :html
 def index
   @sites = ["Israel", "nydc1", "ladc1", "chidc2", "Europe", "Tokyo"]
-  @providers = [ "fastly", "akamai", "edgecast", "internap", "origin"]
+  @providers = [ "fastly", "akamai", "edgecast", "internap", "cloudflare", "origin"]
   @checks = Check.all
   @fastly_total = Check.where(cdn: 'fastly')
   @edgecast_total = Check.where(cdn: 'edgecast')
   @internap_total = Check.where(cdn: 'internap')
   @akamai_total = Check.where(cdn: 'akamai')
+  @cloudflare_total = Check.where(cdn: 'cloudflare')
   @origin_total = Check.where(cdn: 'origin')
  
 
