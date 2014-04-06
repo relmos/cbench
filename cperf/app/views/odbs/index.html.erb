@@ -5,7 +5,7 @@
 	  <tr><td><b><%= s %></b></td></tr>
 	  <% @providers.each do |p| %>
 	 	 <% @results = Odb.where(cdn: p, site:s) %>
-	     <tr><td><%= p %> <%= s %>:<% if @results.average("mesurement") %><%= @results.average("mesurement").round(2) %>ms<% end %></td><td><%= link_to 'More', :controller => 'show', :site => s, :provider => p %></td></tr>
+	     <tr><td><%= p %> <%= s %>:<% if @results.average("mesurement") %><%= @results.average("mesurement").round(2) %>ms<% end %></td><td><%= link_to 'More', :controller => 'showodbs', :site => s, :provider => p %></td></tr>
 	  <% end %>
 	  <% @site = @odbs.where(site: s) %>
 	  	<tr><td><%= pie_chart @site.group(:cdn).sum(:mesurement) %></td></tr>

@@ -16,6 +16,9 @@ Cperf::Application.routes.draw do
   resources :show do
     root to: 'checks#show'
   end
+  resources :showodbs do
+    root to: 'odbs#showodbs'
+  end
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
