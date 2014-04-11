@@ -2,8 +2,8 @@ class OdbsController < ApplicationController
   skip_before_filter :verify_authenticity_token
 respond_to :json, :html
 def index
-  @sites = ["Israel", "nydc1", "ladc1", "chidc2", "Europe", "Tokyo"]
-  @providers = [ "origin", "incapsula" ]
+  @sites = ["Israel", "East", "West", "Brazil", "Europe", "Tokyo"]
+  @providers = [ "origin", "akamai" ]
   @odbs = Odb.all
   @fastly_total = Odb.where(cdn: 'fastly')
   @edgecast_total = Odb.where(cdn: 'edgecast')
