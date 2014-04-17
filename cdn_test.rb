@@ -6,7 +6,7 @@ require 'json'
 class TestCdn
         def SetParameters(location)
                 @cdn = Hash.new {|h,k| h[k] = []}
-                @cdn['cdnlist'] = [ 'akamai', 'fastly', 'edgecast', 'internap', 'cloudflare', 'origin'  ]
+                @cdn['cdnlist'] = [ 'akamai', 'fastly', 'cloudflare', 'edgecast', 'internap', 'll', 'origin'  ]
                 @cdn['images'] = [ 'IMG2.jpg','IMG5.jpg','bird1.jpeg','bird2.jpg','cat1.jpeg','cat2.jpeg','homer.gif','pic1.jpg','pic2.gif','img22.JPG','pic2.jpg','pic3.gif','pic4.gif','pic5.gif' ]
                 @cdn['stylesheets'] = [ 'application.css','formtastic.css','mainpage.css','scaffold.css','sections.css' ]
                 @cdn['javascripts'] = [ 'application.js','controls.js','dragdrop.js','effects.js','prototype.js','rails.js' ]
@@ -41,7 +41,7 @@ class TestCdn
                         @response = GetCdn("http://cdn-#{cdn}.outbrain.cc/#{dir}/#{f}")
 			@code = @response.code
 			@end_time = Time.now
-			@mesurement = ((@end_time - @begin_time)*1000) #.round(2)
+			@mesurement = ((@end_time - @begin_time)*1000)
 			@post_params = BuildRequest(cdn,f)
 			PostResult(@post_params)
                 end
